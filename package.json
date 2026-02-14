@@ -1,0 +1,12 @@
+{
+  "name": "hybrid-b2b-dropshipping-platform",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node apps/backend/src/index.mjs",
+    "dev": "NODE_ENV=development node apps/backend/src/index.mjs",
+    "test": "node --test apps/backend/tests/domain.test.mjs",
+    "check": "node --check apps/backend/src/auth/roles.mjs && node --check apps/backend/src/domain/commission.mjs && node --check apps/backend/src/domain/inventory.mjs && node --check apps/backend/src/domain/wallet.mjs && node --check apps/backend/src/services/orderService.mjs && node --check apps/backend/src/api/server.mjs && node --check apps/backend/src/index.mjs"
+  }
+}
