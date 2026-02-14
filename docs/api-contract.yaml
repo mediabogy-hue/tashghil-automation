@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: Hybrid B2B Dropshipping API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /auth/login:
+    post:
+      summary: Login for all roles
+      responses:
+        '200':
+          description: JWT and refresh token
+  /admin/products/{productId}/review:
+    post:
+      summary: Approve/reject product and set approved price
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Updated product status
+  /admin/products/{productId}/commission:
+    put:
+      summary: Set product commission percentage
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Commission updated
+  /merchant/products:
+    post:
+      summary: Merchant creates product draft
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Product created in pending state
+    get:
+      summary: Merchant list own products
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Merchant products
+  /dropshipper/catalog:
+    get:
+      summary: List approved products only
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Approved products
+  /dropshipper/orders:
+    post:
+      summary: Create order for customer
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Pending payment order
+  /payments/{orderId}/proof:
+    post:
+      summary: Upload proof of manual payment
+      security:
+        - bearerAuth: []
+      responses:
+        '202':
+          description: Awaiting admin verification
+  /admin/payments/{orderId}/verify:
+    post:
+      summary: Verify payment and credit dropshipper wallet
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Payment verified and wallet updated
+  /dropshipper/wallet:
+    get:
+      summary: Wallet summary and transactions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Wallet details
+  /dropshipper/withdrawals:
+    post:
+      summary: Request withdrawal
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Withdrawal request submitted
+  /admin/withdrawals/{withdrawalId}/approve:
+    post:
+      summary: Approve withdrawal request
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Withdrawal approved
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
